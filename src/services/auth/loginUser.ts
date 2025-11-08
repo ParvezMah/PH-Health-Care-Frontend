@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { UserRole } from "@/lib/auth-utils";
+import {
+  getDefaultDashboardRoute,
+  isValidRedirectForRole,
+  UserRole,
+} from "@/lib/auth-utils";
 import { parse } from "cookie";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { redirect } from "next/navigation";
@@ -58,8 +62,6 @@ export const loginUser = async (
       },
     });
 
-    const result = await res.json();
-
     const setCookieHeaders = res.headers.getSetCookie();
 
     if (setCookieHeaders && setCookieHeaders.length > 0) {
@@ -115,29 +117,21 @@ export const loginUser = async (
 
     const userRole: UserRole = verifiedToken.role;
 
-    const getDefaultDashboardRoute = (role: UserRole): string => {
-      if (role === "ADMIN") {
-        return "/admin/dashboard";
+    // const redirectPath =  red irectTo ? (redirectTo as string) : getDefaultDashboardRoute(userRole)
+    if (redirectTo) {
+      const requestedPath = redirectTo.toString();
+      if (isValidRedirectForRole(requestedPath, userRole)) {
+        redirect(requestedPath);
+      } else {
+        redirect(getDefaultDashboardRoute(userRole));
       }
-      if (role === "DOCTOR") {
-        return "/doctor/dashboard";
-      }
-      if (role === "PATIENT") {
-        return "/dashboard";
-      }
-      return "/";
-    };
-
-    const redirectPath = redirectTo ? (redirectTo as string) : getDefaultDashboardRoute(userRole)
-    redirect(redirectPath);
-
-
-  } catch (error: any) {
-        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
-        if (error?.digest?.startsWith('NEXT_REDIRECT')) {
-            throw error;
-        }
-        console.log(error);
-        return { error: "Login failed" };
     }
-}
+  } catch (error: any) {
+    // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+    if (error?.digest?.startsWith("NEXT_REDIRECT")) {
+      throw error;
+    }
+    console.log(error);
+    return { error: "Login failed" };
+  }
+};
