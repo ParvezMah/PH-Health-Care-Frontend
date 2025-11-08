@@ -21,6 +21,7 @@ const registerValidationZodSchema = z
         "Confirm Password is required and must be at least 6 characters long",
     }),
   })
+  // Confirm password match validation Refinements
   .refine((data: any) => data.password === data.confirmPassword, {
     error: "Passwords do not match",
     path: ["confirmPassword"],
