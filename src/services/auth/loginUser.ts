@@ -85,15 +85,17 @@ export const loginUser = async (
     cookieStore.set("accessToken", accessTokenObject.accessToken, {
       secure: true,
       httpOnly: true,
-      maxAge: parseInt(accessTokenObject["Max-Age"]),
+      maxAge: parseInt(accessTokenObject["Max-Age"]) || 1000 * 60 * 60,
       path: accessTokenObject.Path || "/",
+      sameSite: accessTokenObject["SameSite"] || "none",
     });
 
     cookieStore.set("refreshToken", refreshTokenObject.refreshToken, {
       secure: true,
       httpOnly: true,
-      maxAge: parseInt(refreshTokenObject["Max-Age"]),
+      maxAge:parseInt(refreshTokenObject["Max-Age"]) || 1000 * 60 * 60 * 24 * 90,
       path: refreshTokenObject.Path || "/",
+      sameSite: refreshTokenObject["SameSite"] || "none",
     });
 
     return {
