@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { UserRole } from "@/lib/auth-utils";
 import { parse } from "cookie";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import z from "zod";
 
@@ -24,6 +27,8 @@ export const loginUser = async (
   formData: any
 ): Promise<any> => {
   try {
+    const redirectTo = formData.get("redirect") || null;
+    console.log("redirectTo : ", redirectTo);
     let accessTokenObject: null | any = null;
     let refreshTokenObject: null | any = null;
     const loginData = {
@@ -93,16 +98,46 @@ export const loginUser = async (
     cookieStore.set("refreshToken", refreshTokenObject.refreshToken, {
       secure: true,
       httpOnly: true,
-      maxAge:parseInt(refreshTokenObject["Max-Age"]) || 1000 * 60 * 60 * 24 * 90,
+      maxAge:
+        parseInt(refreshTokenObject["Max-Age"]) || 1000 * 60 * 60 * 24 * 90,
       path: refreshTokenObject.Path || "/",
       sameSite: refreshTokenObject["SameSite"] || "none",
     });
 
-    return {
-      result,
+    const verifiedToken: JwtPayload | string = jwt.verify(
+      accessTokenObject.accessToken,
+      process.env.JWT_SECRET as string
+    );
+
+    if (typeof verifiedToken === "string") {
+      throw new Error("Invalid token");
+    }
+
+    const userRole: UserRole = verifiedToken.role;
+
+    const getDefaultDashboardRoute = (role: UserRole): string => {
+      if (role === "ADMIN") {
+        return "/admin/dashboard";
+      }
+      if (role === "DOCTOR") {
+        return "/doctor/dashboard";
+      }
+      if (role === "PATIENT") {
+        return "/dashboard";
+      }
+      return "/";
     };
-  } catch (error) {
-    console.log(error);
-    return { error: "Login failed" };
-  }
-};
+
+    const redirectPath = redirectTo ? (redirectTo as string) : getDefaultDashboardRoute(userRole)
+    redirect(redirectPath);
+
+
+  } catch (error: any) {
+        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+        if (error?.digest?.startsWith('NEXT_REDIRECT')) {
+            throw error;
+        }
+        console.log(error);
+        return { error: "Login failed" };
+    }
+}
