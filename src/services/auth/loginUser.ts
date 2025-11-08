@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { parse } from "cookie";
+import { cookies } from "next/headers";
 import z from "zod";
 
 const loginValidationZodSchema = z.object({
@@ -22,6 +24,8 @@ export const loginUser = async (
   formData: any
 ): Promise<any> => {
   try {
+    let accessTokenObject: null | any = null;
+    let refreshTokenObject: null | any = null;
     const loginData = {
       email: formData.get("email"),
       password: formData.get("password"),
@@ -47,9 +51,54 @@ export const loginUser = async (
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => res.json());
+    });
 
-    return res;
+    const result = await res.json();
+
+    const setCookieHeaders = res.headers.getSetCookie();
+
+    if (setCookieHeaders && setCookieHeaders.length > 0) {
+      setCookieHeaders.forEach((cookie: string) => {
+        const parsedCookie = parse(cookie);
+
+        if (parsedCookie["accessToken"]) {
+          accessTokenObject = parsedCookie;
+        }
+        if (parsedCookie["refreshToken"]) {
+          refreshTokenObject = parsedCookie;
+        }
+      });
+    } else {
+      throw new Error("No Set-Cookie header found");
+    }
+
+    if (!accessTokenObject) {
+      throw new Error("Tokens not found in cookies");
+    }
+
+    if (!refreshTokenObject) {
+      throw new Error("Tokens not found in cookies");
+    }
+
+    const cookieStore = await cookies();
+
+    cookieStore.set("accessToken", accessTokenObject.accessToken, {
+      secure: true,
+      httpOnly: true,
+      maxAge: parseInt(accessTokenObject["Max-Age"]),
+      path: accessTokenObject.Path || "/",
+    });
+
+    cookieStore.set("refreshToken", refreshTokenObject.refreshToken, {
+      secure: true,
+      httpOnly: true,
+      maxAge: parseInt(refreshTokenObject["Max-Age"]),
+      path: refreshTokenObject.Path || "/",
+    });
+
+    return {
+      result,
+    };
   } catch (error) {
     console.log(error);
     return { error: "Login failed" };
