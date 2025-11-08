@@ -44,6 +44,7 @@ export async function proxy(request: NextRequest) {
     // Rule 1 & 2 for open public routes and auth routes
 
     if (!accessToken) {
+        // User after login redirect to the page they were trying to access
         const loginUrl = new URL("/login", request.url);
         loginUrl.searchParams.set("redirect", pathname);
         return NextResponse.redirect(loginUrl);
@@ -54,10 +55,20 @@ export async function proxy(request: NextRequest) {
         return NextResponse.next();
     }
 
+    // Rule 4 : User is trying to access role based protected route
+    if (routerOwner === "ADMIN" || routerOwner === "DOCTOR" || routerOwner === "PATIENT") {
+        if (userRole !== routerOwner) {
+            return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url))
+        }
+    }
 
     console.log("userRole in proxy middleware: ", userRole);
+
     return NextResponse.next();
 }
+
+
+
 
 // See "Matching Paths" below to learn more
 export const config = {
