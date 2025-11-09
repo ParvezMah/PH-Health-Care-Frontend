@@ -62,6 +62,8 @@ export const loginUser = async (
       },
     });
 
+    const result = await res.json();
+
     const setCookieHeaders = res.headers.getSetCookie();
 
     if (setCookieHeaders && setCookieHeaders.length > 0) {
@@ -117,6 +119,10 @@ export const loginUser = async (
 
     const userRole: UserRole = verifiedToken.role;
 
+    if (!result.success) {
+      throw new Error(result.message || "Login failed");
+    }
+
     // const redirectPath =  red irectTo ? (redirectTo as string) : getDefaultDashboardRoute(userRole)
     if (redirectTo) {
       const requestedPath = redirectTo.toString();
@@ -125,6 +131,8 @@ export const loginUser = async (
       } else {
         redirect(getDefaultDashboardRoute(userRole));
       }
+    } else {
+      redirect(getDefaultDashboardRoute(userRole));
     }
   } catch (error: any) {
     // Re-throw NEXT_REDIRECT errors so Next.js can handle them
