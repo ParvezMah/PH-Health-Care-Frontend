@@ -10,7 +10,7 @@ export async function proxy(request: NextRequest) {
 
     // const accessToken = request.cookies.get("accessToken")?.value || null;
     const accessToken = await getCookie("accessToken") || null;
-    console.log("accessToken : ", accessToken)
+
 
     let userRole: UserRole | null = null;
     if (accessToken) {
@@ -63,7 +63,6 @@ export async function proxy(request: NextRequest) {
         }
     }
 
-    console.log("userRole in proxy middleware: ", userRole);
 
     return NextResponse.next();
 }

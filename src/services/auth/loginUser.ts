@@ -32,7 +32,6 @@ export const loginUser = async (
 ): Promise<any> => {
   try {
     const redirectTo = formData.get("redirect") || null;
-    console.log("redirectTo : ", redirectTo);
     let accessTokenObject: null | any = null;
     let refreshTokenObject: null | any = null;
     const loginData = {
@@ -125,12 +124,12 @@ export const loginUser = async (
     if (redirectTo) {
       const requestedPath = redirectTo.toString();
       if (isValidRedirectForRole(requestedPath, userRole)) {
-        redirect(requestedPath);
+        redirect(`${requestedPath}?loggedIn=true`);
       } else {
-        redirect(getDefaultDashboardRoute(userRole));
+        redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
       }
     } else {
-      redirect(getDefaultDashboardRoute(userRole));
+      redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
     }
 
     return result;

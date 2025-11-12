@@ -33,7 +33,7 @@ export const registerPatient = async (
   formData: any
 ): Promise<any> => {
   try {
-    console.log("formData.address : ", formData.get("address"));
+
     const validationData = {
       name: formData.get("name"),
       address: formData.get("address"),
