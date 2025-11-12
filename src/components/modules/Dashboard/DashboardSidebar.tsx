@@ -1,8 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { getUserInfo } from "@/services/auth/getUserInfo";
+import { UserInfo } from "@/types/user.interface";
+import DashboardSidebarContent from "./DashboardSidebarContent";
+import { NavSection } from "@/types/dashboard.interface";
+import { getDefaultDashboardRoute } from "@/lib/auth-utils";
 
-const DashboardSidebar = () => {
+const DashboardSidebar = async () => {
+  const userInfo = (await getUserInfo()) as UserInfo;
+  const navItems:NavSection[]=[];
+  const dashboardHome = getDefaultDashboardRoute(userInfo.role);
+
   return (
-    <div>DashboardSidebar</div>
-  )
-}
+    <DashboardSidebarContent
+      userInfo={userInfo}
+      navItems={navItems}
+      dashboardHome={dashboardHome}
+    />
+  );
+};
 
-export default DashboardSidebar
+export default DashboardSidebar;
