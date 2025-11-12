@@ -9,9 +9,8 @@ import {
 import { parse } from "cookie";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 import z from "zod";
-import { getCookie, setCookie } from "./tokenHandlers";
+import { setCookie } from "./tokenHandlers";
 
 const loginValidationZodSchema = z.object({
   email: z.email({
@@ -133,13 +132,22 @@ export const loginUser = async (
     } else {
       redirect(getDefaultDashboardRoute(userRole));
     }
+
+    return result;
   } catch (error: any) {
     // Re-throw NEXT_REDIRECT errors so Next.js can handle them
     if (error?.digest?.startsWith("NEXT_REDIRECT")) {
       throw error;
     }
     console.log(error);
-    return { error: "Login failed" };
+    return {
+      success: false,
+      message: `${
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Login Failed. You might have entered incorrect email or password."
+      }`,
+    };
   }
 };
 
