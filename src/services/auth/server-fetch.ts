@@ -40,3 +40,5 @@ export const serverFetch = {
  * serverFetch.get("/auth/me")
  * serverFetch.post("/auth/login", { body: JSON.stringify({}) })
  */
+
+// 69-2 Analyzing The Admin Dashboard Management Pages
