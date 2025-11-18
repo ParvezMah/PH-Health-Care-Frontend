@@ -1,0 +1,52 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "OkC-KJirpFS-1LqNzUOiU",
+      "type": "text",
+      "x": 444.1302614795927,
+      "y": 235,
+      "width": 1826.3262939453125,
+      "height": 364.57142857142856,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "av",
+      "roundness": null,
+      "seed": 1994371993,
+      "version": 437,
+      "versionNonce": 1561234521,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1762583810114,
+      "link": null,
+      "locked": false,
+      "text": "Public Routes\n    Open Publice Routes: /, /about, /doctores/doctorId\n    Auth Routes: /login, /register\n\n\nProtected Routes\n    Common Protected Routes: /my-profile, /settings, /change-password, /my-profile/*\n    Role Based Routes: /dashboard/* (Patient), /doctor/dashboard/* /doctor/routine/*, /assistants (Doctor), /admin/dashboard/* (admin)\n\nExact Path Match\nRouter Pattern Match (/doctor/*)",
+      "fontSize": 26.51428571428571,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "Public Routes\n    Open Publice Routes: /, /about, /doctores/doctorId\n    Auth Routes: /login, /register\n\n\nProtected Routes\n    Common Protected Routes: /my-profile, /settings, /change-password, /my-profile/*\n    Role Based Routes: /dashboard/* (Patient), /doctor/dashboard/* /doctor/routine/*, /assistants (Doctor), /admin/dashboard/* (admin)\n\nExact Path Match\nRouter Pattern Match (/doctor/*)",
+      "autoResize": true,
+      "lineHeight": 1.25
+    }
+  ],
+  "appState": {
+    "gridSize": 20,
+    "gridStep": 5,
+    "gridModeEnabled": false,
+    "viewBackgroundColor": "#ffffff",
+    "lockedMultiSelections": {}
+  },
+  "files": {}
+}
