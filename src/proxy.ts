@@ -5,14 +5,20 @@ import { getDefaultDashboardRoute, getRouteOwner, isAuthRoute, UserRole } from "
 import { deleteCookie, getCookie } from "./services/auth/tokenHandlers";
 
 // This function can be marked `async` if using `await` inside
+
+// 1️⃣ When a request comes in
 export async function proxy(request: NextRequest) {
+
+    // 2️⃣ Extract current route (pathname)
     const pathname = request.nextUrl.pathname;
 
+    // 3️⃣ Read the accessToken from cookies
     // const accessToken = request.cookies.get("accessToken")?.value || null;
     const accessToken = await getCookie("accessToken") || null;
 
 
     let userRole: UserRole | null = null;
+    // 4️⃣ Verify JWT token (if present)
     if (accessToken) {
         const verifiedToken: JwtPayload | string = jwt.verify(accessToken, process.env.JWT_SECRET as string);
 
@@ -25,13 +31,16 @@ export async function proxy(request: NextRequest) {
         userRole = verifiedToken.role;
     }
 
+    // 5️⃣ Determine route owner
     const routerOwner = getRouteOwner(pathname);
     //path = /doctor/appointments => "DOCTOR"
     //path = /my-profile => "COMMON"
     //path = /login => null
 
+    // 5️⃣ Determine type
     const isAuth = isAuthRoute(pathname)
 
+    // 6️⃣ Apply authentication & authorization rules
     // Rule 1 : User is logged in and trying to access auth route. Redirect to default dashboard
     if (accessToken && isAuth) {
         return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url))
@@ -63,7 +72,7 @@ export async function proxy(request: NextRequest) {
         }
     }
 
-
+    // 7️⃣ Allow request if all checks pass
     return NextResponse.next();
 }
 
@@ -72,6 +81,11 @@ export async function proxy(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
+    // 8️⃣ Matcher Configuration
+        // This ensures proxy() runs for all requests except:
+        // API routes
+        // Static files
+        // Metadata files (robots.txt, sitemap.xml, etc.)
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
