@@ -5,6 +5,7 @@
 import { createSpecialityZodSchema } from "@/zod/specialities.validation";
 
 import { serverFetch } from "@/lib/server-fetch";
+import { zodValidator } from "@/lib/zodValidator";
 
 export async function createSpeciality(_prevState: any, formData: FormData) {
   try {
@@ -12,20 +13,25 @@ export async function createSpeciality(_prevState: any, formData: FormData) {
       title: formData.get("title") as string,
     };
 
-    const validatedPayload = createSpecialityZodSchema.safeParse(payload)
-    
+    // const validatedPayload = createSpecialityZodSchema.safeParse(payload)
 
-    if (!validatedPayload.success) {
-      return {
-        success: false,
-        errors: validatedPayload.error.issues.map((issue) => {
-          return {
-            field: issue.path[0],
-            message: issue.message,
-          };
-        }),
-      };
+    // if (!validatedPayload.success) {
+    //   return {
+    //     success: false,
+    //     errors: validatedPayload.error.issues.map((issue) => {
+    //       return {
+    //         field: issue.path[0],
+    //         message: issue.message,
+    //       };
+    //     }),
+    //   };
+    // }
+
+    if (zodValidator(payload, createSpecialityZodSchema).success === false) {
+      return zodValidator(payload, createSpecialityZodSchema);
     }
+
+    const validatedPayload = zodValidator(payload, createSpecialityZodSchema).data;
 
     const newFormData = new FormData();
     newFormData.append("data", JSON.stringify(validatedPayload));
