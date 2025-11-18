@@ -13,20 +13,6 @@ export async function createSpeciality(_prevState: any, formData: FormData) {
       title: formData.get("title") as string,
     };
 
-    // const validatedPayload = createSpecialityZodSchema.safeParse(payload)
-
-    // if (!validatedPayload.success) {
-    //   return {
-    //     success: false,
-    //     errors: validatedPayload.error.issues.map((issue) => {
-    //       return {
-    //         field: issue.path[0],
-    //         message: issue.message,
-    //       };
-    //     }),
-    //   };
-    // }
-
     if (zodValidator(payload, createSpecialityZodSchema).success === false) {
       return zodValidator(payload, createSpecialityZodSchema);
     }
