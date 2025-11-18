@@ -50,12 +50,12 @@ export const loginUser = async (
       loginValidationZodSchema
     ).data;
 
-    const res = await serverFetch.post(
-      "http://localhost:5000/api/v1/auth/login",
-      {
-        body: JSON.stringify(validatedPayload),
-      }
-    );
+    const res = await serverFetch.post("/auth/login", {
+      body: JSON.stringify(validatedPayload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     const result = await res.json();
 

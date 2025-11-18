@@ -29,7 +29,7 @@ export const registerPatient = async (
     }
 
     const validatedPayload: any = zodValidator(payload,registerPatientValidationZodSchema).data;
-    
+
     const registerData = {
       password: validatedPayload.password,
       patient: {
@@ -48,7 +48,7 @@ export const registerPatient = async (
     }
 
     const res = await serverFetch.post(
-      "http://localhost:5000/api/v1/user/create-patient",
+      "/user/create-patient",
       {
         body: newFormData,
       }
