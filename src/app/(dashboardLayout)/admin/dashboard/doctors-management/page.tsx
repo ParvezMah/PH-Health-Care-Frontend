@@ -5,7 +5,7 @@ import SearchFilter from "@/components/shared/SearchFilter";
 import SelectFilter from "@/components/shared/SelectFilter";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
-
+import { queryStringFormatter } from "@/lib/formatters";
 import { getDoctors } from "@/services/admin/doctorManagement";
 import { getSpecialities } from "@/services/admin/specialitiesManagement";
 import { ISpecialty } from "@/types/specialities.interface";
@@ -17,9 +17,8 @@ const AdminDoctorsManagementPage = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
   const searchParamsObj = await searchParams;
-  // const queryString = queryStringFormatter(searchParamsObj); // {searchTerm: "John", speciality: "Cardiology" => "?searchTerm=John&speciality=Cardiology"}
+  const queryString = queryStringFormatter(searchParamsObj); // {searchTerm: "John", speciality: "Cardiology" => "?searchTerm=John&speciality=Cardiology"}
   const specialitiesResult = await getSpecialities();
-  console.log({specialitiesResult})
   const doctorsResult = await getDoctors();
   // const totalPages = Math.ceil(
   //   doctorsResult.meta.total / doctorsResult.meta.limit
