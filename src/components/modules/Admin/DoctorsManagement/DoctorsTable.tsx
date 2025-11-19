@@ -9,6 +9,7 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import DoctorFormDialog from "./DoctorFormDialog";
 import { doctorsColumns } from "./doctorsColumns";
+import DoctorViewDetailDialog from "./DoctorViewDetailDialog";
 
 interface DoctorsTableProps {
   doctors: IDoctor[];
@@ -19,7 +20,7 @@ const DoctorsTable = ({ doctors, specialities }: DoctorsTableProps) => {
   const router = useRouter();
   const [, startTransition] = useTransition();
   const [deletingDoctor, setDeletingDoctor] = useState<IDoctor | null>(null);
-  const [viewingDoctor, setViewingDoctor] = useState<IDoctor | null>(null);
+  const [viewingDoctor, setViewingDoctor] = useState<IDoctor | null>(null); //
   const [editingDoctor, setEditingDoctor] = useState<IDoctor | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -29,6 +30,7 @@ const DoctorsTable = ({ doctors, specialities }: DoctorsTableProps) => {
     });
   };
 
+  // now created
   const handleView = (doctor: IDoctor) => {
     setViewingDoctor(doctor);
   };
@@ -62,7 +64,7 @@ const DoctorsTable = ({ doctors, specialities }: DoctorsTableProps) => {
       <ManagementTable
         data={doctors}
         columns={doctorsColumns}
-        onView={handleView}
+        onView={handleView} // now created
         onEdit={handleEdit}
         onDelete={handleDelete}
         getRowKey={(doctor) => doctor.id!}
@@ -81,11 +83,11 @@ const DoctorsTable = ({ doctors, specialities }: DoctorsTableProps) => {
       />
 
       {/* View Doctor Detail Dialog */}
-      {/* <DoctorViewDetailDialog
+      <DoctorViewDetailDialog
         open={!!viewingDoctor}
         onClose={() => setViewingDoctor(null)}
         doctor={viewingDoctor}
-      /> */}
+      />
 
       {/* Delete Confirmation Dialog */}
       <DeleteConfirmationDialog
