@@ -21,7 +21,7 @@ const DoctorsTable = ({ doctors, specialities }: DoctorsTableProps) => {
   const [, startTransition] = useTransition();
   const [deletingDoctor, setDeletingDoctor] = useState<IDoctor | null>(null);
   const [viewingDoctor, setViewingDoctor] = useState<IDoctor | null>(null); //
-  const [editingDoctor, setEditingDoctor] = useState<IDoctor | null>(null);
+  const [editingDoctor, setEditingDoctor] = useState<IDoctor | null>(null); // now created
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleRefresh = () => {
@@ -35,6 +35,7 @@ const DoctorsTable = ({ doctors, specialities }: DoctorsTableProps) => {
     setViewingDoctor(doctor);
   };
 
+  // now created
   const handleEdit = (doctor: IDoctor) => {
     setEditingDoctor(doctor);
   };
@@ -65,11 +66,12 @@ const DoctorsTable = ({ doctors, specialities }: DoctorsTableProps) => {
         data={doctors}
         columns={doctorsColumns}
         onView={handleView} // now created
-        onEdit={handleEdit}
+        onEdit={handleEdit} // now created
         onDelete={handleDelete}
         getRowKey={(doctor) => doctor.id!}
         emptyMessage="No doctors found"
       />
+      {/* now created this */}
       {/* Edit Doctor Form Dialog */}
       <DoctorFormDialog
         open={!!editingDoctor}
