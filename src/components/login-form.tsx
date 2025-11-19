@@ -10,7 +10,6 @@ import { Input } from "./ui/input";
 
 const LoginForm = ({ redirect }: { redirect?: string }) => {
   const [state, formAction, isPending] = useActionState(loginUser, null);
-  console.log({ state });
 
   useEffect(() => {
     if (state && !state.success && state.message) {
@@ -77,3 +76,6 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
 };
 
 export default LoginForm;
+
+
+// 70-12 Module Summary
