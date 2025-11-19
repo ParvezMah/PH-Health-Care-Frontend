@@ -20,7 +20,7 @@ const AdminDoctorsManagementPage = async ({
   // const queryString = queryStringFormatter(searchParamsObj); // {searchTerm: "John", speciality: "Cardiology" => "?searchTerm=John&speciality=Cardiology"}
   const specialitiesResult = await getSpecialities();
   console.log({specialitiesResult})
-  // const doctorsResult = await getDoctors(queryString);
+  const doctorsResult = await getDoctors();
   // const totalPages = Math.ceil(
   //   doctorsResult.meta.total / doctorsResult.meta.limit
   // );
@@ -39,16 +39,16 @@ const AdminDoctorsManagementPage = async ({
         />
         <RefreshButton />
       </div>
-      {/* <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
+      <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
         <DoctorsTable
           doctors={doctorsResult.data}
           specialities={specialitiesResult.data}
         />
-        <TablePagination
+        {/* <TablePagination
           currentPage={doctorsResult.meta.page}
           totalPages={totalPages}
-        />
-      </Suspense> */}
+        /> */}
+      </Suspense>
     </div>
   );
 };
