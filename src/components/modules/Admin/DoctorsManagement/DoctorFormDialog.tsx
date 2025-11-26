@@ -15,11 +15,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useSpecialtySelection } from "@/hooks/specialtyHooks/useSpecialtySelection";
 import { createDoctor, updateDoctor } from "@/services/admin/doctorManagement";
 import { IDoctor } from "@/types/doctor.interface";
 import { ISpecialty } from "@/types/specialities.interface";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
+import SpecialtyMultiSelect from "./SpecialtyMultiSelect";
 
 interface IDoctorFormDialogProps {
   open: boolean;
@@ -47,6 +49,16 @@ const DoctorFormDialog = ({
     isEdit ? updateDoctor.bind(null, doctor.id!) : createDoctor,
     null
   );
+
+  const specialtySelection = useSpecialtySelection({
+    doctor,
+    isEdit,
+    open,
+  });
+  
+  const getSpecialtyTitle = (id: string): string => {
+    return specialities?.find((s) => s.id === id)?.title || "Unknown";
+  };
 
   useEffect(() => {
     if (state?.success) {
@@ -119,47 +131,23 @@ const DoctorFormDialog = ({
               </>
             )}
 
-            <Field>
-              <FieldLabel htmlFor="specialities">Speciality</FieldLabel>
-              <Input
-                id="specialities"
-                name="specialities"
-                placeholder="Select a speciality"
-                // defaultValue={isEdit ? doctor?.doctorSpecialties?.[0]?.specialties?.title : ""}
-                defaultValue={selectedSpeciality}
-                type="hidden"
-              />
-              <Select
-                value={
-                  //   isEdit
-                  //     ? doctor?.doctorSpecialties?.[0]?.specialties?.title || ""
-                  //     : selectedSpeciality
-                  selectedSpeciality
-                }
-                onValueChange={setSelectedSpeciality}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a speciality" />
-                </SelectTrigger>
-                <SelectContent>
-                  {specialities && specialities.length > 0 ? (
-                    specialities.map((speciality) => (
-                      <SelectItem key={speciality.id} value={speciality.title}>
-                        {speciality.title}
-                      </SelectItem>
-                    ))
-                  ) : (
-                    <SelectItem value="none" disabled>
-                      No specialities available
-                    </SelectItem>
-                  )}
-                </SelectContent>
-              </Select>
-              <p className="text-xs text-gray-500 mt-1">
-                Select a speciality for the doctor
-              </p>
-              <InputFieldError state={state} field="specialities" />
-            </Field>
+            {/* Specialty Selection */}
+            <SpecialtyMultiSelect
+              selectedSpecialtyIds={specialtySelection.selectedSpecialtyIds}
+              removedSpecialtyIds={specialtySelection.removedSpecialtyIds}
+              currentSpecialtyId={specialtySelection.currentSpecialtyId}
+              availableSpecialties={specialtySelection.getAvailableSpecialties(
+                specialities!
+              )}
+              isEdit={isEdit}
+              onCurrentSpecialtyChange={
+                specialtySelection.setCurrentSpecialtyId
+              }
+              onAddSpecialty={specialtySelection.handleAddSpecialty}
+              onRemoveSpecialty={specialtySelection.handleRemoveSpecialty}
+              getSpecialtyTitle={getSpecialtyTitle}
+              getNewSpecialties={specialtySelection.getNewSpecialties}
+            />
 
             <Field>
               <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
