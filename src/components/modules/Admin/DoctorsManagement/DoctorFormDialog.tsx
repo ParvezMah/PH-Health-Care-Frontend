@@ -55,7 +55,7 @@ const DoctorFormDialog = ({
     isEdit,
     open,
   });
-  
+
   const getSpecialtyTitle = (id: string): string => {
     return specialities?.find((s) => s.id === id)?.title || "Unknown";
   };
@@ -85,7 +85,9 @@ const DoctorFormDialog = ({
                 id="name"
                 name="name"
                 placeholder="Dr. John Doe"
-                defaultValue={isEdit ? doctor?.name : undefined}
+                defaultValue={
+                  state?.formData?.name || (isEdit ? doctor?.name : "")
+                }
               />
               <InputFieldError state={state} field="name" />
             </Field>
@@ -97,7 +99,9 @@ const DoctorFormDialog = ({
                 name="email"
                 type="email"
                 placeholder="doctor@example.com"
-                defaultValue={isEdit ? doctor?.email : undefined}
+                defaultValue={
+                  state?.formData?.email || (isEdit ? doctor?.email : "")
+                }
                 disabled={isEdit}
               />
               <InputFieldError state={state} field="email" />
@@ -111,6 +115,7 @@ const DoctorFormDialog = ({
                     id="password"
                     name="password"
                     type="password"
+                    defaultValue={state?.formData?.password || ""}
                     placeholder="Enter password"
                   />
                   <InputFieldError state={state} field="password" />
@@ -124,6 +129,7 @@ const DoctorFormDialog = ({
                     id="confirmPassword"
                     name="confirmPassword"
                     type="password"
+                    defaultValue={state?.formData?.confirmPassword || ""}
                     placeholder="Confirm password"
                   />
                   <InputFieldError state={state} field="confirmPassword" />
@@ -155,7 +161,10 @@ const DoctorFormDialog = ({
                 id="contactNumber"
                 name="contactNumber"
                 placeholder="+1234567890"
-                defaultValue={doctor?.contactNumber}
+                defaultValue={
+                  state?.formData?.contactNumber ||
+                  (isEdit ? doctor?.contactNumber : "")
+                }
               />
               <InputFieldError state={state} field="contactNumber" />
             </Field>
@@ -166,7 +175,9 @@ const DoctorFormDialog = ({
                 id="address"
                 name="address"
                 placeholder="123 Main St, City, Country"
-                defaultValue={isEdit ? doctor?.address : undefined}
+                defaultValue={
+                  state?.formData?.address || (isEdit ? doctor?.address : "")
+                }
               />
               <InputFieldError state={state} field="address" />
             </Field>
@@ -179,7 +190,11 @@ const DoctorFormDialog = ({
                 id="registrationNumber"
                 name="registrationNumber"
                 placeholder="REG123456"
-                defaultValue={isEdit ? doctor?.registrationNumber : undefined}
+                defaultValue={
+                  state?.formData?.registrationNumber ||
+                  (isEdit ? doctor?.registrationNumber : "")
+                }
+
               />
               <InputFieldError state={state} field="registrationNumber" />
             </Field>
@@ -193,7 +208,10 @@ const DoctorFormDialog = ({
                 name="experience"
                 type="number"
                 placeholder="5"
-                defaultValue={isEdit ? doctor?.experience : undefined}
+                defaultValue={
+                  state?.formData?.experience ||
+                  (isEdit ? doctor?.experience : "")
+                }
                 min="0"
               />
               <InputFieldError state={state} field="experience" />
@@ -242,7 +260,11 @@ const DoctorFormDialog = ({
                 id="qualification"
                 name="qualification"
                 placeholder="MBBS, MD"
-                defaultValue={isEdit ? doctor?.qualification : undefined}
+                defaultValue={
+                  state?.formData?.qualification ||
+                  (isEdit ? doctor?.qualification : "")
+                }
+
               />
               <InputFieldError state={state} field="qualification" />
             </Field>
@@ -255,7 +277,10 @@ const DoctorFormDialog = ({
                 id="currentWorkingPlace"
                 name="currentWorkingPlace"
                 placeholder="City Hospital"
-                defaultValue={isEdit ? doctor?.currentWorkingPlace : undefined}
+                defaultValue={
+                  state?.formData?.currentWorkingPlace ||
+                  (isEdit ? doctor?.currentWorkingPlace : "")
+                }
               />
               <InputFieldError state={state} field="currentWorkingPlace" />
             </Field>
@@ -266,7 +291,11 @@ const DoctorFormDialog = ({
                 id="designation"
                 name="designation"
                 placeholder="Senior Consultant"
-                defaultValue={isEdit ? doctor?.designation : undefined}
+                defaultValue={
+                  state?.formData?.designation ||
+                  (isEdit ? doctor?.designation : "")
+                }
+
               />
               <InputFieldError state={state} field="designation" />
             </Field>
@@ -278,7 +307,7 @@ const DoctorFormDialog = ({
                 <p className="text-xs text-gray-500 mt-1">
                   Upload a profile photo for the doctor
                 </p>
-                <InputFieldError state={state} field="file" />
+                <InputFieldError state={state} field="profilePhoto" />
               </Field>
             )}
           </div>
