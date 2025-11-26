@@ -37,3 +37,5 @@ const AdminDoctorsManagementPage = async ({
 };
 
 export default AdminDoctorsManagementPage;
+
+// 71-12 Module Summary
