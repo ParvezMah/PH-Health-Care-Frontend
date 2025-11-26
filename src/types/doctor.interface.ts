@@ -14,6 +14,7 @@ export interface IDoctor {
   designation: string;
   specialties?: string[];
   profilePhoto?: File | string;
+  removeSpecialties?: string[];
   isDeleted?: boolean;
   averageRating?: number;
   createdAt?: string;
