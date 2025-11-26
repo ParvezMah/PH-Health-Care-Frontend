@@ -7,21 +7,21 @@ import { IDoctor } from "@/types/doctor.interface";
 import { createDoctorZodSchema, updateDoctorZodSchema } from "@/zod/doctors.validation";
 
 export async function createDoctor(_prevState: any, formData: FormData) {
-    try {
 
-        const specialtiesString = formData.get("specialties") as string;
-        let specialties: string[] = [];
-        if (specialtiesString) {
-            try {
-                specialties = JSON.parse(specialtiesString);
-                if (!Array.isArray(specialties)) specialties = [];
-            } catch {
-                specialties = [];
-            }
+    
+    const specialtiesString = formData.get("specialties") as string;
+    let specialties: string[] = [];
+    if (specialtiesString) {
+        try {
+            specialties = JSON.parse(specialtiesString);
+            if (!Array.isArray(specialties)) specialties = [];
+        } catch {
+            specialties = [];
         }
-        
-        const experienceValue = formData.get("experience");
-        const appointmentFeeValue = formData.get("appointmentFee");
+    }
+    
+    const experienceValue = formData.get("experience");
+    const appointmentFeeValue = formData.get("appointmentFee");
 
     const validationPayload: IDoctor = {
         name: formData.get("name") as string,
@@ -81,18 +81,19 @@ export async function createDoctor(_prevState: any, formData: FormData) {
         newFormData.append("data", JSON.stringify(backendPayload))
         newFormData.append("file", formData.get("file") as Blob)
 
+    try {
         const response = await serverFetch.post("/user/create-doctor", {
             body: newFormData,
         })
-
         const result = await response.json();
-
-
         return result;
     } catch (error: any) {
         console.log(error);
-        return { success: false, message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}` }
-
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`,
+            formData: validationPayload,
+        }
     }
 }
 
