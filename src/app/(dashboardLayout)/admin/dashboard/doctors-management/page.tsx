@@ -16,8 +16,11 @@ const AdminDoctorsManagementPage = async ({
   const searchParamsObj = await searchParams;
   const queryString = queryStringFormatter(searchParamsObj); // {searchTerm: "John", speciality: "Cardiology" => "?searchTerm=John&speciality=Cardiology"}
   const specialitiesResult = await getSpecialities();
-  const doctorsResult = await getDoctors();
-  const totalPages = Math.ceil((doctorsResult?.meta.total || 1) / (doctorsResult?.meta.limit || 1));
+  const doctorsResult = await getDoctors(queryString);
+  console.log({ doctorsResult });
+  const totalPages = Math.ceil(
+    (doctorsResult?.meta?.total || 1) / (doctorsResult?.meta?.limit || 1)
+  );
   return (
     <div className="space-y-6">
       <DoctorsManagementHeader specialities={specialitiesResult?.data || []} />
@@ -37,5 +40,3 @@ const AdminDoctorsManagementPage = async ({
 };
 
 export default AdminDoctorsManagementPage;
-
-// 71-12 Module Summary
