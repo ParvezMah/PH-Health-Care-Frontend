@@ -134,7 +134,7 @@ export async function resetPassword(_prevState: any, formData: FormData) {
     }
 }
 
-export async function getNewAccessToken() {
+export async function getNewAccessToken() { // newAccessToken
     try {
         const accessToken = await getCookie("accessToken");
         const refreshToken = await getCookie("refreshToken");

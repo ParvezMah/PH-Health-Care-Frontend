@@ -10,8 +10,8 @@ import { getNewAccessToken } from './services/auth/auth.service';
 
 // This function can be marked `async` if using `await` inside
 export async function proxy(request: NextRequest) {
-    const pathname = request.nextUrl.pathname;
-    const hasTokenRefreshedParam = request.nextUrl.searchParams.has('tokenRefreshed');
+    const pathname = request.nextUrl.pathname; 
+    const hasTokenRefreshedParam = request.nextUrl.searchParams.has('tokenRefreshed'); // tokenRefreshed
 
     // If coming back after token refresh, remove the param and continue
     if (hasTokenRefreshedParam) {
