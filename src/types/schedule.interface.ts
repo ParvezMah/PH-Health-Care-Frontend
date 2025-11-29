@@ -13,6 +13,7 @@ export interface IScheduleFormData {
     endTime: string;
 }
 
+// Doctor Schedule
 export interface IDoctorSchedule {
     scheduleId: string;
     doctorId: string;
