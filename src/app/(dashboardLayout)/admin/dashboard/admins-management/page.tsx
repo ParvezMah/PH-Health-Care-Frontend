@@ -39,3 +39,10 @@ const AdminAdminsManagementPage = async ({
 };
 
 export default AdminAdminsManagementPage;
+
+
+/*
+Faced 2 Errors
+1. When We create an admin. it gets in admin creading loop or re-rendering loop. then all creadet admin gets remove.
+2. When i login. after login. it redirects to reset-password page force fully that i dont want
+*/
