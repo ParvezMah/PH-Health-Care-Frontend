@@ -46,7 +46,7 @@ const AdminFormDialog = ({
   // Handle success/error from server
   useEffect(() => {
     if (state?.success) {
-      toast.success(state.message || "Operation successful");
+      toast.success(state.message || "Operation successful"); // Eikhan theke error ta astece repeated toasdt (Admin created successfully)
       if (formRef.current) {
         formRef.current.reset();
       }

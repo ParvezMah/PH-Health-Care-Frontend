@@ -3,7 +3,7 @@
 import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useCallback, useState, useTransition } from "react";
 import AdminFormDialog from "./AdminFormDialog";
 
 const AdminsManagementHeader = () => {
@@ -11,11 +11,19 @@ const AdminsManagementHeader = () => {
   const [, startTransition] = useTransition();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleSuccess = () => {
+  // const handleSuccess = () => {
+  //   startTransition(() => {
+  //     router.refresh();
+  //   });
+  // };
+
+
+  // Wrap handleSuccess in useCallback to prevent infinite re-render loop when creating an admin
+  const handleSuccess = useCallback(()=> {
     startTransition(() => {
       router.refresh();
     });
-  };
+  }, [router]);
 
   //force remount to reset state of form
   const [dialogKey, setDialogKey] = useState(0);
@@ -25,9 +33,9 @@ const AdminsManagementHeader = () => {
     setIsDialogOpen(true);
   };
 
-  const handleCloseDialog = () => {
+  const handleCloseDialog = useCallback(() => {
     setIsDialogOpen(false);
-  };
+  }, []);
 
   return (
     <>
