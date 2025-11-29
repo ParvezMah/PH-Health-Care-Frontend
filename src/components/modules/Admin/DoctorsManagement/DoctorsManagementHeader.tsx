@@ -4,7 +4,7 @@ import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
 import { ISpecialty } from "@/types/specialities.interface";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useCallback, useState, useTransition } from "react";
 import DoctorFormDialog from "./DoctorFormDialog";
 
 interface DoctorsManagementHeaderProps {
@@ -18,11 +18,18 @@ const DoctorsManagementHeader = ({
   const [, startTransition] = useTransition();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleSuccess = () => {
+  // const handleSuccess = () => {
+  //   startTransition(() => {
+  //     router.refresh();
+  //   });
+  // };
+
+  // Wrap in useCallback to prevent infinite loop
+  const handleSuccess = useCallback(() => {
     startTransition(() => {
       router.refresh();
     });
-  };
+  }, [router, startTransition]);
 
   const [dialogKey, setDialogKey] = useState(0);
 
@@ -31,10 +38,13 @@ const DoctorsManagementHeader = ({
     setIsDialogOpen(true);
   };
 
-  const handleCloseDialog = () => {
-    setIsDialogOpen(false);
-  };
+  // const handleCloseDialog = () => {
+  //   setIsDialogOpen(false);
+  // };
 
+  const handleCloseDialog = useCallback(() => {
+    setIsDialogOpen(false);
+  }, []);
 
   return (
     <>
