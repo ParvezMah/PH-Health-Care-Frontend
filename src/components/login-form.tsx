@@ -30,6 +30,7 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
               name="email"
               type="email"
               placeholder="m@example.com"
+              defaultValue={"admin@gmail.com"}
               // required
             />
             <InputFieldError field="email" state={state} />
@@ -43,6 +44,7 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
               name="password"
               type="password"
               placeholder="Enter your password"
+              defaultValue={"Admin1234"}
               //   required
             />
             <InputFieldError field="password" state={state} />

@@ -1,5 +1,5 @@
-import PatientsFilter from "@/components/modules/Admin/PatientsManagement/PatientsFilter";
-import PatientsTable from "@/components/modules/Admin/PatientsManagement/PatientsTable";
+import PatientsFilter from "@/components/modules/Admin/PatientsManagement/PatientFilter";
+import PatientsTable from "@/components/modules/Admin/PatientsManagement/PatientTable";
 import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";

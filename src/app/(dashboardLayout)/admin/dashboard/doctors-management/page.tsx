@@ -1,6 +1,6 @@
 import DoctorFilters from "@/components/modules/Admin/DoctorsManagement/DoctorFilters";
-import DoctorsManagementHeader from "@/components/modules/Admin/DoctorsManagement/DoctorsManagementHeader";
-import DoctorsTable from "@/components/modules/Admin/DoctorsManagement/DoctorsTable";
+import DoctorsManagementHeader from "@/components/modules/Admin/DoctorsManagement/DoctorManagementHeader";
+import DoctorsTable from "@/components/modules/Admin/DoctorsManagement/DoctorTable";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";

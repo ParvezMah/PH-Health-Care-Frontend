@@ -4,9 +4,12 @@ import ManagementTable from "@/components/shared/ManagementTable";
 import { IAppointment } from "@/types/appointments.interface";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { appointmentsColumns } from "./appointmentsColumns";
 import AppointmentViewDetailDialog from "./AppointmentViewDetailDialog";
 import ChangeAppointmentStatusDialog from "./ChangeAppointmentStatusDialog";
+import { appointmentsColumns } from "./appointmentsColumns";
+
+
+
 
 interface AppointmentsTableProps {
   appointments: IAppointment[];

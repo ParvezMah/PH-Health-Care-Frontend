@@ -1,6 +1,6 @@
-import SchedulesFilter from "@/components/modules/Admin/SchedulesManagement/SchedulesFilter";
-import SchedulesManagementHeader from "@/components/modules/Admin/SchedulesManagement/SchedulesManagementHeader";
-import SchedulesTable from "@/components/modules/Admin/SchedulesManagement/SchedulesTable";
+import SchedulesFilter from "@/components/modules/Admin/SchedulesManagement/ScheduleFilter";
+import SchedulesManagementHeader from "@/components/modules/Admin/SchedulesManagement/ScheduleManagementHeader";
+import SchedulesTable from "@/components/modules/Admin/SchedulesManagement/ScheduleTable";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";

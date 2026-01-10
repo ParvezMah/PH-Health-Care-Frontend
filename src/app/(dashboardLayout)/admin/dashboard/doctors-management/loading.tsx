@@ -1,8 +1,8 @@
-import { ManagementPageLoading } from "@/components/shared/ManagementPageLoader";
+import { ManagementPageLoader } from "@/components/shared/ManagementPageLoader";
 
 const DoctorsManagementLoading = () => {
   return (
-    <ManagementPageLoading
+    <ManagementPageLoader
       columns={10}
       hasActionButton
       filterCount={5}

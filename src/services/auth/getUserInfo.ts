@@ -18,6 +18,7 @@ export const getUserInfo = async (): Promise<UserInfo | any> => {
 
         const result = await response.json();
 
+
         if (result.success) {
             const accessToken = await getCookie("accessToken");
 
@@ -26,6 +27,7 @@ export const getUserInfo = async (): Promise<UserInfo | any> => {
             }
 
             const verifiedToken = jwt.verify(accessToken, process.env.JWT_SECRET as string) as JwtPayload;
+
 
             userInfo = {
                 name: verifiedToken.name || "Unknown User",

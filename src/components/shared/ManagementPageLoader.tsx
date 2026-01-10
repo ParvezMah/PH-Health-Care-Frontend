@@ -2,19 +2,19 @@
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { useMemo } from "react";
 
-interface ManagementPageLoadingProps {
+interface ManagementPageLoaderProps {
   columns: number;
   hasActionButton?: boolean;
   filterCount?: number;
   filterWidths?: string[];
 }
 
-export function ManagementPageLoading({
+export function ManagementPageLoader({
   columns,
   hasActionButton = false,
   filterCount = 0,
   filterWidths = [],
-}: ManagementPageLoadingProps) {
+}: ManagementPageLoaderProps) {
   // Memoize filter elements to prevent recreation on every render
   const filterElements = useMemo(() => {
     if (filterCount === 0) return null;
@@ -54,3 +54,6 @@ export function ManagementPageLoading({
     </div>
   );
 }
+
+
+

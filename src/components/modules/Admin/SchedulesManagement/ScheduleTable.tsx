@@ -7,7 +7,7 @@ import { ISchedule } from "@/types/schedule.interface";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { schedulesColumns } from "./schedulesColumns";
+import { schedulesColumns } from "./ScheduleColumns";
 
 interface SchedulesTableProps {
   schedules: ISchedule[];

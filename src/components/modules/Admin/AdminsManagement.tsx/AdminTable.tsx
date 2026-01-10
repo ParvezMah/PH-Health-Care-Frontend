@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import AdminFormDialog from "./AdminFormDialog";
-import { adminsColumns } from "./adminsColumn";
+import { adminsColumns } from "./AdminColumn";
 import AdminViewDetailDialog from "./AdminViewDetailDialog";
 
 interface AdminsTableProps {

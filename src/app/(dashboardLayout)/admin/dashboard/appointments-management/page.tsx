@@ -1,5 +1,4 @@
 import AppointmentsFilter from "@/components/modules/Admin/AppointmentsManagement/AppointmentsFilter";
-
 import AppointmentsTable from "@/components/modules/Admin/AppointmentsManagement/AppointmentsTable";
 import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
 import TablePagination from "@/components/shared/TablePagination";

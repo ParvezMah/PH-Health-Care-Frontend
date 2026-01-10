@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import PatientFormDialog from "./PatientFormDialog";
-import { patientsColumns } from "./patientsColumns";
-import PatientViewDetailDialog from "./PatientsViewDetailDialog";
+import { patientsColumns } from "./PatientColumns";
+import PatientViewDetailDialog from "./PatientViewDetailDialog";
 
 interface PatientsTableProps {
   patients: IPatient[];
