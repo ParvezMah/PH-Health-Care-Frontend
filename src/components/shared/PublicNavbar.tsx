@@ -4,8 +4,14 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
 import { Menu } from "lucide-react";
 import { getCookie } from "@/services/auth/tokenHandlers";
 import LogoutButton from "./LogoutButton";
+import { UserInfo } from "@/types/user.interface";
+import UserDropdown from "../modules/Dashboard/UserDropdown";
 
-const PublicNavbar = async () => {
+interface PublicNavbarUserDropdownProps {
+  userInfo: UserInfo;
+}
+
+const PublicNavbar = async ({userInfo}: PublicNavbarUserDropdownProps) => {
   const navItems = [
     { href: "#", label: "Consultation" },
     { href: "#", label: "Health Plans" },
@@ -23,7 +29,7 @@ const PublicNavbar = async () => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur  dark:bg-background/95">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center space-x-2">
-          <span className="text-xl font-bold text-primary">PH Doc</span>
+          <span className="text-xl font-bold text-primary">PH Health Care</span>
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
@@ -48,6 +54,9 @@ const PublicNavbar = async () => {
           )}
         </div>
 
+        {/* User Dropdown */}
+        <UserDropdown userInfo={userInfo} />
+
         {/* Mobile Menu */}
 
         <div className="md:hidden">
@@ -55,7 +64,7 @@ const PublicNavbar = async () => {
             <SheetTrigger asChild>
               <Button variant="outline"> <Menu/> </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px] p-4">
+            <SheetContent side="right" className="w-75 sm:w-100 p-4">
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
               <nav className="flex flex-col space-y-4 mt-8">
                 {navItems.map((link) => (
